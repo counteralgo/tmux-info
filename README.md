@@ -12,6 +12,39 @@ Mobile tmux configuration for persistent AI legal research sessions on GCP VM in
 | **AI Model** | Google Gemini 2.5 Flash |
 | **Document DB** | Firestore `database-1` → `alj_documents_v2` (982 docs) |
 
+## Remote Access
+
+### Apache Guacamole (Docker)
+Browser-based remote desktop/SSH gateway running on vm4-seed.
+
+| Container | Image | Port | Role |
+|---|---|---|---|
+| `guacamole` | guacamole/guacamole | 8080 (web UI) | Web frontend |
+| `guacd` | guacamole/guacd | 4822 | Connection proxy |
+| `guac-mysql` | mysql:8.0 | 3306 | Auth/config database |
+
+Access at: `http://<vm4-seed-ip>:8080/guacamole`
+
+### RustDesk Server (Docker)
+Self-hosted remote desktop relay running on vm4-seed.
+
+| Container | Image | Ports | Role |
+|---|---|---|---|
+| `hbbs` | rustdesk/rustdesk-server | 21115-21116, 21118 | Rendezvous/ID server |
+| `hbbr` | rustdesk/rustdesk-server | 21117, 21119 | Relay server |
+
+### Tailscale Mesh Network (v1.94.1)
+| Device | Tailscale IP | OS | Status |
+|---|---|---|---|
+| vm4-seed | 100.78.159.59 | linux | online |
+| vm1-orch | 100.108.11.17 | linux | offline |
+| iphone-14 | 100.99.79.97 | iOS | online |
+| samsung-sm-a156u-1 | 100.114.193.120 | android | online |
+| samsung-sm-a156u | 100.94.79.39 | android | online |
+| win-jmjt4ep4eb5 | 100.95.228.49 | windows | online |
+
+**Note:** vm1-orch (orchestrator) is currently offline.
+
 ## Tmux Session Recovery
 
 ### First Time Setup
