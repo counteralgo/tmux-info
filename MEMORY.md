@@ -18,6 +18,13 @@
 - Config at `~/.tmux.conf` — mouse on, resurrect, continuum (15 min auto-save)
 - Plugins need `Ctrl+b Shift+I` on first tmux launch to install
 
+## Remote Access (vm4-seed)
+- **Guacamole** — Docker (guacamole + guacd + guac-mysql), web UI on port 8080
+- **RustDesk** — Docker (hbbs + hbbr), self-hosted relay on ports 21115-21119
+- **Tailscale** v1.94.1 — mesh network, 6 devices:
+  - vm4-seed (100.78.159.59), vm1-orch (100.108.11.17, often offline)
+  - iphone-14, 2x samsung, win-jmjt4ep4eb5
+
 ## Repo Contents (tmux-info)
 - `README.md` — Mobile ops kit documentation
 - `daily_brief.md` — Session restore protocol
