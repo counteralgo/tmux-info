@@ -23,7 +23,43 @@ Browser-based remote desktop/SSH gateway running on vm4-seed.
 | `guacd` | guacamole/guacd | 4822 | Connection proxy |
 | `guac-mysql` | mysql:8.0 | 3306 | Auth/config database |
 
-Access at: `http://<vm4-seed-ip>:8080/guacamole`
+**Access URL (HTTPS via Tailscale):** `https://vm4-seed.tail5ceaf1.ts.net/guacamole/`
+
+Requires Tailscale to be connected on the accessing device. Valid TLS certificate — no browser warnings.
+
+#### VNC Backend (systemd)
+Guacamole connects to a TigerVNC server running the Xfce desktop on vm4-seed.
+
+| Setting | Value |
+|---|---|
+| VNC Server | TigerVNC 1.12.0 (Xtigervnc) |
+| Display | :1 (port 5901) |
+| Resolution | 1280x720, 24-bit color |
+| Desktop | Xfce 4.18 |
+| Systemd Unit | `vncserver@1.service` (enabled, starts on boot) |
+
+```bash
+# Service management
+sudo systemctl status vncserver@1
+sudo systemctl restart vncserver@1
+```
+
+#### Tailscale HTTPS Proxy
+Tailscale Serve provides automatic HTTPS termination with valid Let's Encrypt certificates.
+
+| Setting | Value |
+|---|---|
+| Public URL | `https://vm4-seed.tail5ceaf1.ts.net/` |
+| Backend | `http://localhost:8080` (Guacamole) |
+| Certificate | Auto-managed by Tailscale |
+
+```bash
+# Check status
+tailscale serve status
+
+# Disable
+tailscale serve --https=443 off
+```
 
 ### RustDesk Server (Docker)
 Self-hosted remote desktop relay running on vm4-seed.
