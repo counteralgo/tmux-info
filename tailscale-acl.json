@@ -1,3 +1,6 @@
+// Paste this into: https://login.tailscale.com/admin/acls/file
+// Then click Save.
+
 {
   "acls": [
     {
